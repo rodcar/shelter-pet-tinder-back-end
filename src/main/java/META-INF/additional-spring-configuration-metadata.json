@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "shelterpet",
+    "type": "java.lang.Mapping",
+    "description": "A description for 'shelterpet'"
+  },
+  {
+    "name": "spring.jackson.serialization.fail-on-empty-beans",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jackson.serialization.fail-on-empty-beans'"
+  },
+  {
+    "name": "spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults'"
+  }
+]}

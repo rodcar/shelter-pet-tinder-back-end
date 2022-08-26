@@ -1,0 +1,24 @@
+shelterpet:
+  app:
+    jwtExpiration: 86400
+    jwtSecret: ed7740d60765f211259195b9043f0476
+
+spring:
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+    show-sql: 'false'
+    properties.hibernate.temp.use_jdbc_metadata_defaults: false
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: root
+    url: jdbc:postgresql://localhost:5432/shelterpet_adoption
+    username: postgres
+
+spring.jackson.serialization.fail-on-empty-beans: false
+
+spring.mvc.pathmatch.matching-strategy: ANT_PATH_MATCHER
+
+server:
+  port: 8090
