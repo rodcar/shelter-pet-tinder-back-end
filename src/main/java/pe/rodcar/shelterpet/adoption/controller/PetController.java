@@ -29,7 +29,7 @@ public class PetController {
 	@Autowired
 	private PetService topicService;
 
-	@ApiOperation("List of all topics")
+	@ApiOperation("List of all pets")
 	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<PetResponse>> fetchAll() {
 		try {
@@ -51,7 +51,7 @@ public class PetController {
 		}
 	}
 
-	@ApiOperation(value = "Save a topic")
+	@ApiOperation(value = "Save a pet")
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> saveObjetive(@Validated @RequestBody Pet pet) {
 		try {
