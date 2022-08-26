@@ -38,7 +38,7 @@ public class SwaggerConfig {
     public Docket api() {
     	return new Docket(DocumentationType.SWAGGER_2)
     			.select() 
-		          .apis(RequestHandlerSelectors.any())         
+		          .apis(RequestHandlerSelectors.basePackage("pe.rodcar.shelterpet.adoption.controller"))         
 		          .build()
 		          .apiInfo(DEFAULT_API_INFO)
 		          .securitySchemes(Arrays.asList(apiKey()));
