@@ -45,4 +45,9 @@ public class PetServiceImpl implements PetService {
 	public Optional<Pet> findById(Long id) {
 		return topicRepository.findById(id);
 	}
+
+	@Override
+	public List<Pet> findAllByOrderByDateAddedDesc() {
+		return topicRepository.findAllByOrderByDateAddedDesc();
+	}
 }

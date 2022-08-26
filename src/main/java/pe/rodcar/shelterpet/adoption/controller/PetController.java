@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.swagger.annotations.ApiOperation;
 
 import pe.rodcar.shelterpet.adoption.entities.Pet;
+import pe.rodcar.shelterpet.adoption.response.PetResponse;
 import pe.rodcar.shelterpet.adoption.service.PetService;
 
 @RestController
@@ -27,26 +28,36 @@ public class PetController {
 
 	@Autowired
 	private PetService topicService;
-	
+
 	@ApiOperation("List of all topics")
-	@GetMapping(value="/", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Pet>> fetchAll() {
+	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<PetResponse>> fetchAll() {
 		try {
-			List<Pet> topics = new ArrayList<>();
-			topics = topicService.findAll();
-			return new ResponseEntity<List<Pet>>(topics, HttpStatus.OK);
+			List<PetResponse> pets = new ArrayList<>();
+			List<Pet> petsFounded = topicService.findAllByOrderByDateAddedDesc();
+
+			for (Pet pet : petsFounded) {
+				List<String> photos = new ArrayList<String>();
+				photos.add(pet.getPhoto());
+				PetResponse responseItem = new PetResponse(pet.getId(), pet.getType(), pet.getName(), pet.getAge(), pet.getBreed(),
+						pet.getLocation(), pet.getStatus(), pet.getPhoneNumber(), photos);
+				pets.add(responseItem);
+			}
+
+			return new ResponseEntity<List<PetResponse>>(pets, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@ApiOperation(value="Save a topic")
-	@PostMapping(value="/", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> saveObjetive(@Validated @RequestBody Pet pet) {		
+
+	@ApiOperation(value = "Save a topic")
+	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> saveObjetive(@Validated @RequestBody Pet pet) {
 		try {
 			Pet o = topicService.save(pet);
-			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(o.getId()).toUri();
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(o.getId())
+					.toUri();
 			return ResponseEntity.created(location).build();
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
