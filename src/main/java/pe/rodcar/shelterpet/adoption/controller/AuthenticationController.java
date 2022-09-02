@@ -60,7 +60,7 @@ public class AuthenticationController {
 	/*@Autowired
 	private EmailService emailService;*/
 
-	@ApiOperation("Autenticación de usuario")
+	@ApiOperation("User authentication")
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
 		String email = loginRequest.getEmail();
@@ -92,7 +92,7 @@ public class AuthenticationController {
 				.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getEmail(), userDetails.getAuthorities()));
 	}
 
-	@ApiOperation("Registro de usuario")
+	@ApiOperation("User registration")
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
 		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
@@ -144,7 +144,7 @@ public class AuthenticationController {
 		}
 	}*/
 
-	@ApiOperation("Verifica si un correo electrónico está registrado")
+	@ApiOperation("Verify if an email is already used")
 	@GetMapping(value = "/exists")
 	@ResponseBody
 	public ResponseEntity<Object> exitsByEmail(@RequestParam("email") String email) {
