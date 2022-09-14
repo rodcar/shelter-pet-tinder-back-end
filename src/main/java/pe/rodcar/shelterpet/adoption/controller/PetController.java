@@ -1,6 +1,7 @@
 package pe.rodcar.shelterpet.adoption.controller;
 
 import java.net.URI;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,11 +33,16 @@ public class PetController {
 	@ApiOperation("List of all pets")
 	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<PetResponse>> fetchAll() {
+		ZonedDateTime now = ZonedDateTime.now();
+		ZonedDateTime thirtyDaysAgo = now.plusDays(-30);
 		try {
 			List<PetResponse> pets = new ArrayList<>();
 			List<Pet> petsFounded = topicService.findAllByOrderByDateAddedDesc();
 
 			for (Pet pet : petsFounded) {
+				if (pet.getDateAdded().toInstant().isBefore(thirtyDaysAgo.toInstant())) {
+					continue;
+				}
 				List<String> photos = new ArrayList<String>();
 				photos.add(pet.getPhoto());
 				PetResponse responseItem = new PetResponse(pet.getId(), pet.getType(), pet.getName(), pet.getAge(), pet.getBreed(),
